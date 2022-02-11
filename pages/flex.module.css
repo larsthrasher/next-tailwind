@@ -1,0 +1,16 @@
+
+.parent{
+  display: flex;
+  flex-direction: column;
+  height: 1500px;
+  align-items: center;
+  justify-content: center;
+}
+
+.child{
+  margin: 1px;
+  width: 200px;
+  height: 200px;
+  background-color: red;
+
+}
