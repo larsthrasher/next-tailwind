@@ -4,11 +4,13 @@ import { Footer, Navbar } from '@components/common';
 import { Sidebar } from '@components/ui';
 import { CartSidebar } from "@components/cart";
 import { useUI } from '@components/ui/context'
+import { ApiProvider } from "@framework"
 
 const Layout = ({ children }) => {
   const { isSidebarOpen, closeSidebar } = useUI();
 
   return (
+    <ApiProvider>
     <div className={s.root}>
       <Navbar />
       <Sidebar
@@ -22,6 +24,7 @@ const Layout = ({ children }) => {
       </main>
       <Footer />
     </div>
+    </ApiProvider>
   )
 }
 

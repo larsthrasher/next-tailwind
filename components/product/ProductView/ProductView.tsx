@@ -6,6 +6,9 @@ import Image from "next/image"
 import { Product } from '@common/types/product'
 import { ProductSlider, Swatch } from '@components/product'
 import { Choices, getVariant } from '../helpers'
+import { useUI } from '@components/ui/context'
+import useAddItem from "@framework/cart/use-add-item"
+
 
 interface Props {
   product: Product
@@ -14,8 +17,26 @@ interface Props {
 const ProductView: FC<Props> = ({ product }) => {
   const [choices, setChoices] = useState<Choices>({})
 
-  const variant = getVariant(product, choices)
+  const { openSidebar } = useUI()
+  const addItem = useAddItem()
   
+  const variant = getVariant(product, choices)
+
+  const addToCart = async () => {
+    try {
+      const item = {
+        productId: String(product.id),
+        variantId: variant?.id,
+        variantOptions: variant?.options
+      }
+
+      const output = await addItem(item)
+      alert(JSON.stringify(output))
+      openSidebar()
+    } catch {}
+  }
+
+
   return (
     <Container>
       <div className={cn(s.root, 'fit', 'mb-5')}>
@@ -77,7 +98,7 @@ const ProductView: FC<Props> = ({ product }) => {
           <div>
             <Button
               className={s.button}
-              onClick={() => alert("adding to cart")}
+              onClick={addToCart}
             >
               Add to Cart
             </Button>
