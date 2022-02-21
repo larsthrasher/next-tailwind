@@ -1,5 +1,5 @@
 import { useHook, useSWRHook } from '../utils/use-hook'
-import { ApiHooks } from '@common/types/hooks'
+import { ApiHooks,  } from '@common/types/hooks'
 import Cookies from 'js-cookie'
 import { useApiProvider } from "@common"
 
