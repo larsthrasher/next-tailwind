@@ -1,11 +1,10 @@
-
 import { useApiProvider } from "@common"
-import { ApiHooks } from "@common/types/hooks"
+import { ApiFetcher } from "@common/types/api"
+import { ApiHooks, Hook } from "@common/types/hooks"
 import { MutationHook } from "@common/types/hooks"
-import useSWR from 'swr'
+import useSWR from "swr"
 
-
-export const useHook = (fn: (apiHooks: ApiHooks) => MutationHook) => {
+export const useHook = <H>(fn: (apiHooks: ApiHooks) => H) => {
   const { hooks } = useApiProvider()
   return fn(hooks)
 }
@@ -13,8 +12,8 @@ export const useHook = (fn: (apiHooks: ApiHooks) => MutationHook) => {
 export const useMutationHook = (
   hook: MutationHook
 ) => {
-
   const { fetcher } = useApiProvider()
+
   return hook.useHook({
     fetch: (input: any) => {
       return hook.fetcher({
@@ -26,7 +25,7 @@ export const useMutationHook = (
   })
 }
 
-const useData = (hook: any,  fetcher: ApiFetcher, ctx: any) => {
+const useData = (hook: any, fetcher: ApiFetcher, ctx: any) => {
   const hookFetcher = async (query: string) => {
     try {
       return await hook.fetcher({
@@ -40,7 +39,7 @@ const useData = (hook: any,  fetcher: ApiFetcher, ctx: any) => {
   }
 
   const response = useSWR(
-    hook.fetchOptions.query,
+    hook.fetcherOptions.query,
     hookFetcher,
     ctx.swrOptions
   )
@@ -48,9 +47,10 @@ const useData = (hook: any,  fetcher: ApiFetcher, ctx: any) => {
   return response
 }
 
-//cache data first if possible
+// cache data first if possible
 export const useSWRHook = (hook: any) => {
   const { fetcher } = useApiProvider()
+
   return hook.useHook({
     useData(ctx: any) {
       const data = useData(

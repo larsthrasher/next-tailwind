@@ -37,7 +37,7 @@ export interface Product {
   slug: string
   path: string
   images: ProductImage[]
-  price: ProductPrice
-  options: ProductOption[]
+  price: ProductPrice,
+  options: ProductOption[],
   variants: ProductVariant[]
 }
