@@ -1,26 +1,24 @@
-import {  ReactNode } from 'react'
+import { ReactNode } from "react"
 
 import {
   ApiProvider as CoreApiProvider,
   useApiProvider as useCoreApiProvider
- } from '@common';
+} from "@common"
 
-import { shopifyHooks } from "./hooks";
-import { getConfig } from "./api/config";
-
+import { shopifyHooks } from "./hooks"
+import { getConfig } from "./api/config"
 const config = getConfig()
+
 
 interface ShopifyApiProviderProps {
   children: ReactNode | ReactNode[]
 }
 
-
 export const ApiProvider = ({children}: ShopifyApiProviderProps) => {
-
 
   return (
     <CoreApiProvider
-      config={{...config }}
+      config={{...config}}
       hooks={shopifyHooks}
     >
       {children}
