@@ -46,10 +46,15 @@ export const handler: MutationHook<AddItemHookDescriptor> = {
   },
   useHook: ({fetch}) => () => {
     const { mutate: updateCart } = useCart()
+
     return async (input) => {
+      return new Promise((res) => {
+    setTimeout(async () => {
       const response = await fetch(input)
       await updateCart(response, false)
-      return response
+      res(response)
+    }, 1000)
+  })
     }
   }
 }
